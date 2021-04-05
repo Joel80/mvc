@@ -24,6 +24,7 @@ class Dice
      */
     protected ?int $roll = null;
     private int $sides;
+
     /**
      * Constructor
      *

@@ -155,4 +155,3 @@ $message = $message ?? null;
     <input type = "submit" id="submit" name="doit" value = "Reset bitcoins">
     </form>
 <?php endif;?>   
-
