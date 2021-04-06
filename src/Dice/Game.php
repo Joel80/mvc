@@ -30,8 +30,10 @@ class Game
      * @var int $computerTotal stores the total value of the computers rolls
      * @var int $computerWins stores the number of wins for computer
      * @var int $playerWins stores the number of wins for player
-     * @var int $computeBitCoin stores the number of bitcoins for computer
+     * @var int $computerBitCoin stores the number of bitcoins for computer
      * @var int $playerBitCoin stores the number of bitcoins for player
+     * @var int $initComputerBitCoin stores the initial number of bitcoins for computer
+     * @var int $initPlayerBitCoin stores the initial number of bitcoins for player
      * @var int $bet stores the amount of the current bet
      * @var int $maxBet stores the max amount that is possible to bet
      * @var array $data stores the data sent to the renderView function
@@ -44,6 +46,8 @@ class Game
     private int $computerTotal = 0;
     private int $playerWins = 0;
     private int $computerWins = 0;
+    private int $initComputerBitCoin = 0;
+    private int $initPlayerBitCoin = 0;
     private int $computerBitCoin = 0;
     private int $playerBitCoin = 0;
     private int $bet =  0;
@@ -63,6 +67,8 @@ class Game
         //Set values for member variables
         $this->computerBitCoin = $computerBitCoin;
         $this->playerBitCoin = $playerBitCoin;
+        $this->initComputerBitCoin = $computerBitCoin;
+        $this->initPlayerBitCoin = $playerBitCoin;
         $this->maxBet = intval($this->playerBitCoin / 2);
 
         //Set values for member variable data
@@ -280,6 +286,9 @@ class Game
         $this->playerTotal = 0;
         $this->computerTotal = 0;
         $this->maxBet = intval($this->playerBitCoin / 2);
+        if($this->playerBitCoin === 1) {
+            $this->maxBet = 1;
+        }
         $this->data = [
             "header" => "Dice",
             "message" => "The dice game!",
@@ -324,10 +333,10 @@ class Game
     public function resetBitCoins(): void
     {
         //Reset member variables
-        $this->playerBitCoin = 10;
-        $this->computerBitCoin = 100;
-        $this->data["computerBitCoin"] = $this->computerBitCoin;
-        $this->data["playerBitCoin"] = $this->playerBitCoin;
+        $this->playerBitCoin = $this->initPlayerBitCoin;
+        $this->computerBitCoin = $this->initComputerBitCoin;
+        $this->data["computerBitCoin"] = $this->initComputerBitCoin;
+        $this->data["playerBitCoin"] = $this->initPlayerBitCoin;
         $this->data["broke"] = null;
     }
 
