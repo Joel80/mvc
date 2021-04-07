@@ -83,11 +83,16 @@ class Game
         $this->gameState = "setup";
     }
 
-  /*   public function getGameState(): string
+    public function getData() 
+    {
+        return $this->data;
+    }
+
+    public function getGameState(): string
     {
         return $this->gameState;
     }
-
+/*
     public function setGameState(string $state): void
     {
         $this->gameState = $state;
@@ -344,11 +349,11 @@ class Game
      * Plays (renders the game)
      * @return void
      */
-    public function playGame(): void
+    /* public function playGame(): void
     {
         $this->data["gameState"] = $this->gameState;
 
         $body = renderView("layout/dice.php", $this->data);
         sendResponse($body);
-    }
+    } */
 }
