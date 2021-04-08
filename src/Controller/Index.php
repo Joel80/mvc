@@ -12,7 +12,7 @@ use function Mos\Functions\renderView;
 /**
  * Controller for the index route.
  */
-class Index 
+class Index
 {
     use ControllerTrait;
 

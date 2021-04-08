@@ -21,8 +21,9 @@ class GraphicalDice extends Dice
     }
 
     /**
-     * graphicDice
-     * @return string  represents a "graphic die roll"
+     * Returns a die in the form of a string
+     * which can be used as e.g. a CSS-classname
+     * @return string
      */
     public function graphicDice()
     {

@@ -18,8 +18,6 @@ class Sample
 
     public function where(): ResponseInterface
     {
-        $psr17Factory = new Psr17Factory();
-
         $data = [
             "header" => "Rainbow page",
             "message" => "Hey, edit this to do it youreself!",
