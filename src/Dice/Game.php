@@ -83,7 +83,7 @@ class Game
         $this->gameState = "setup";
     }
 
-    public function getData() 
+    public function getData(): array
     {
         return $this->data;
     }
@@ -291,7 +291,7 @@ class Game
         $this->playerTotal = 0;
         $this->computerTotal = 0;
         $this->maxBet = intval($this->playerBitCoin / 2);
-        if($this->playerBitCoin === 1) {
+        if ($this->playerBitCoin === 1) {
             $this->maxBet = 1;
         }
         $this->data = [
