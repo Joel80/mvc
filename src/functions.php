@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Mos\Functions;
 
+use Twig\Loader\FilesystemLoader as twigFilesystemLoader;
+use Twig\Environment as twigEnvironment;
+
 /**
  * Functions.
  */
@@ -64,13 +67,13 @@ function renderTwigView(
     static $twig = null;
 
     if (is_null($twig)) {
-        $loader = new \Twig\Loader\FilesystemLoader(
+        $loader = new twigFilesystemLoader(
             INSTALL_PATH . "/view/twig"
         );
         // $twig = new \Twig\Environment($loader, [
         //     "cache" => INSTALL_PATH . "/cache/twig",
         // ]);
-        $twig = new \Twig\Environment($loader);
+        $twig = new twigEnvironment($loader);
     }
 
     return $twig->render($template, $data);
