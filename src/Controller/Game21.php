@@ -8,6 +8,7 @@ use Nyholm\Psr7\Factory\Psr17Factory;
 use Nyholm\Psr7\Response;
 use Psr\Http\Message\ResponseInterface;
 use Jolf20\Dice\Game;
+use Mos\Controller\ControllerTrait;
 
 use function Mos\Functions\{
     renderView,
@@ -19,22 +20,10 @@ use function Mos\Functions\{
  */
 class Game21
 {
-    /* public function index(): ResponseInterface
-    {
-        $psr17Factory = new Psr17Factory();
-
-        $body = renderView("layout/session.php");
-
-        return $psr17Factory
-            ->createResponse(200)
-            ->withBody($psr17Factory->createStream($body));
-    }
- */
-
+    use ControllerTrait;
 
     public function playGame(): ResponseInterface
     {
-        $psr17Factory = new Psr17Factory();
 
         $game = isset($_SESSION["game"]) ? $_SESSION["game"] : new Game();
 
@@ -44,9 +33,7 @@ class Game21
 
         $body = renderView("layout/dice.php", $data);
 
-        return $psr17Factory
-            ->createResponse(200)
-            ->withBody($psr17Factory->createStream($body));
+        return $this->response($body);
     }
 
     public function setup(): ResponseInterface
@@ -63,9 +50,7 @@ class Game21
 
         $game->setup($nrOfDice, $typeOfDice, $bet, $sides);
 
-        return (new Response())
-            ->withStatus(301)
-            ->withHeader("Location", url("/dice"));
+        return $this->redirect((url("/dice")));
     }
 
     public function playerRoll(): ResponseInterface
@@ -74,9 +59,7 @@ class Game21
 
         $game->playerRoll();
 
-        return (new Response())
-            ->withStatus(301)
-            ->withHeader("Location", url("/dice"));
+        return $this->redirect((url("/dice")));
     }
 
     public function computerRoll(): ResponseInterface
@@ -85,9 +68,7 @@ class Game21
 
         $game->computerRoll();
 
-        return (new Response())
-            ->withStatus(301)
-            ->withHeader("Location", url("/dice"));
+        return $this->redirect((url("/dice")));
     }
 
     public function playAgain(): ResponseInterface
@@ -96,9 +77,7 @@ class Game21
 
         $game->playAgain();
 
-        return (new Response())
-            ->withStatus(301)
-            ->withHeader("Location", url("/dice"));
+        return $this->redirect((url("/dice")));
     }
 
     public function resetScore(): ResponseInterface
@@ -107,9 +86,7 @@ class Game21
 
         $game->resetScore();
 
-        return (new Response())
-            ->withStatus(301)
-            ->withHeader("Location", url("/dice"));
+        return $this->redirect((url("/dice")));
     }
 
     public function resetBitcoins(): ResponseInterface
@@ -118,8 +95,6 @@ class Game21
 
         $game->resetBitCoins();
 
-        return (new Response())
-            ->withStatus(301)
-            ->withHeader("Location", url("/dice"));
+        return $this->redirect((url("/dice")));
     }
 }

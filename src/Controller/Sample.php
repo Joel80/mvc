@@ -14,6 +14,8 @@ use function Mos\Functions\renderView;
  */
 class Sample
 {
+    use ControllerTrait;
+
     public function where(): ResponseInterface
     {
         $psr17Factory = new Psr17Factory();
@@ -25,8 +27,6 @@ class Sample
 
         $body = renderView("layout/page.php", $data);
 
-        return $psr17Factory
-            ->createResponse(200)
-            ->withBody($psr17Factory->createStream($body));
+        return $this->response($body);
     }
 }

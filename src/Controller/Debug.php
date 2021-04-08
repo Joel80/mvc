@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace Mos\Controller;
 
-use Nyholm\Psr7\Response;
-use Nyholm\Psr7\Stream;
 use Psr\Http\Message\ResponseInterface;
+use Nyholm\Psr7\Factory\Psr17Factory;
 
 use function Mos\Functions\renderView;
 
@@ -15,12 +14,11 @@ use function Mos\Functions\renderView;
  */
 class Debug
 {
+    use ControllerTrait;
+
     public function __invoke(): ResponseInterface
     {
         $body = renderView("layout/debug.php");
-
-        return (new Response())
-            ->withStatus(200)
-            ->withBody(Stream::create($body));
+        return $this->response($body);
     }
 }
