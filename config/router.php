@@ -39,3 +39,11 @@ $router->addGroup("/dice", function (RouteCollector $router) {
     $router->addRoute("POST", "/reset-score", ["\Jolf20\Controller\Game21", "resetScore"]);
     $router->addRoute("POST", "/reset-bitcoins", ["\Jolf20\Controller\Game21", "resetBitCoins"]);
 });
+
+$router->addGroup("/yatzy", function (RouteCollector $router) {
+    $router->addRoute("GET", "", ["\Jolf20\Controller\YatzyController", "playGame"]);
+    $router->addRoute("POST", "/player-roll", ["\Jolf20\Controller\YatzyController", "playerRoll"]);
+    $router->addRoute("POST", "/lock-dice", ["\Jolf20\Controller\YatzyController", "lockDice"]);
+    $router->addRoute("POST", "/lock-score", ["\Jolf20\Controller\YatzyController", "lockScore"]);
+    $router->addRoute("POST", "/new-game", ["\Jolf20\Controller\YatzyController", "newGame"]);
+});
