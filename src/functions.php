@@ -73,7 +73,7 @@ function renderTwigView(
         // $twig = new \Twig\Environment($loader, [
         //     "cache" => INSTALL_PATH . "/cache/twig",
         // ]);
-        $twig = new \Twig\Environment($loader);
+        $twig = new TwigEnvironment($loader);
     }
 
     return $twig->render($template, $data);

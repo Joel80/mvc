@@ -5,7 +5,7 @@ namespace Jolf20\Dice;
 /**
  * A class for a graphicaldice
  */
-class GraphicalDice extends Dice
+class GraphicalDice2 extends Dice2
 {
     /**
      * Constant to hold the number of sides of the dice
@@ -25,8 +25,9 @@ class GraphicalDice extends Dice
      * which can be used as e.g. a CSS-classname
      * @return string
      */
-    public function graphicDice()
+    public function rollAsString(): string
     {
+
         return "dice-" . $this->roll;
     }
 }

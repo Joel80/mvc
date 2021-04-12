@@ -82,34 +82,12 @@ class DiceHand
         }
     }
 
-    /**
-     * Returns a string with last roll of the hand and the sum
-     * @return string $res .  " = " . $this->sum
-     */
-  /*   public function getLastRoll2(): string
-    {
-        $res = "";
-        $len = count($this->dices);
-
-        for($i = 0; $i < $len; $i++) {
-           $res .= $this->dices[$i]->getLastRoll() . ", ";
-        }
-
-        return $res . " = " . $this->sum;
-    } */
-
      /**
      * Returns an array with last roll of the hand
      * @return array $result The result of the last roll
      */
     public function getLastRoll(): array
     {
-        $len = count($this->dices);
-
-        for ($i = 0; $i < $len; $i++) {
-            $this->result [] = $this->dices[$i]->getLastRoll();
-        }
-
         return $this->result;
     }
 

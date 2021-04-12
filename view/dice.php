@@ -19,7 +19,7 @@ $message = $message ?? null;
 <p><?= $message ?></p>
 
 <?php if ($gameState === "setup") : ?>
-    <form method ="post" action="<?= url("/dice-setup")?>">
+    <form method ="post" action="<?= url("/dice/setup")?>">
     <p>Do you want to play with one or two dice?</p>
     <input type="radio" id="oneDie" name="dice" value="1">
     <label for="onedie">One die</label><br>
@@ -43,11 +43,11 @@ $message = $message ?? null;
     <?php if ($twentyOne) : ?>
         <h2><?= $twentyOne ?></h2>
     <?php endif;?>
-    <form method ="post" action="<?= url("/dice-player-roll")?>">
+    <form method ="post" action="<?= url("/dice/player-roll")?>">
     <input type = "submit" id="submit" name="doit" value = "Roll">
     </form>
     
-    <form method ="post" action="<?= url("/dice-player-stop")?>">
+    <form method ="post" action="<?= url("/dice/computer-roll")?>">
     <input type = "submit" id="submit" name="doit" value = "Stop">
     </form>
 
@@ -142,16 +142,16 @@ $message = $message ?? null;
     <?php endif; ?>
     
     <?php if (!$broke) : ?>
-    <form method ="post" action="<?= url("/dice-play-again")?>">
+    <form method ="post" action="<?= url("/dice/play-again")?>">
     <input type = "submit" id="submit" name="doit" value = "Play again">
     </form>
     <?php endif; ?>
 
-    <form method ="post" action="<?= url("/dice-reset-score")?>">
+    <form method ="post" action="<?= url("/dice/reset-score")?>">
     <input type = "submit" id="submit" name="doit" value = "Reset score">
     </form>
 
-    <form method ="post" action="<?= url("/dice-reset-bitcoins")?>">
+    <form method ="post" action="<?= url("/dice/reset-bitcoins")?>">
     <input type = "submit" id="submit" name="doit" value = "Reset bitcoins">
     </form>
 <?php endif;?>   
