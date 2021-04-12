@@ -36,3 +36,10 @@ footer {
 .dice-sprite.dice-4 { background-position: -64px 0; }
 .dice-sprite.dice-5 { background-position: -32px 0; }
 .dice-sprite.dice-6 { background-position: 0 0; }
+
+.lock-dice input[type=checkbox] {
+    margin-left: 8px;
+    margin-right: 14px;
+    margin-bottom: 14px;
+
+}
