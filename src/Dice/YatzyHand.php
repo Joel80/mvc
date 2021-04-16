@@ -7,7 +7,7 @@ namespace Jolf20\Dice;
 /**
  * Class YatzyHand
  */
-class YatzyHand extends DiceHand2
+class YatzyHand extends DiceHand
 {
     /**
      * @var array $lockedDice holds the lock status of the

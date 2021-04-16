@@ -10,9 +10,7 @@ use Jolf20\Dice\DiceHand;
 use Jolf20\Dice\GraphicalDiceHand;
 
 use function Mos\Functions\{
-    redirectTo,
     renderView,
-    sendResponse,
     url
 };
 
@@ -107,19 +105,25 @@ class Game
      *
      * @return void
      */
-    public function setup(int $nrOfDice, string $diceType, int $bet, int $sides = null): void
+    public function setup(DiceHand $playerHand, DiceHand $computerHand, int $nrOfDice, string $diceType, int $bet, int $sides = null): void
     {
         //Set member variables
         $this->diceType = $diceType;
         $this->bet = $bet;
+        $this->playerHand = $playerHand;
+        $this->computerHand = $computerHand;
 
         //Check for dicetype and create corresponding type of hand
         if ($this->diceType === "text") {
-            $this->playerHand = new DiceHand($nrOfDice, $sides);
-            $this->computerHand = new DiceHand($nrOfDice, $sides);
+            for ($i = 0; $i < $nrOfDice; $i++) {
+                $this->playerHand->addDice(new Dice($sides));
+                $this->computerHand->addDice(new Dice($sides));
+            }
         } elseif ($this->diceType === "graphical") {
-            $this->playerHand = new GraphicalDiceHand($nrOfDice);
-            $this->computerHand = new GraphicalDiceHand($nrOfDice);
+            for ($i = 0; $i < $nrOfDice; $i++) {
+                $this->playerHand->addDice(new GraphicalDice());
+                $this->computerHand->addDice(new GraphicalDice());
+            }
         }
 
         //Set values four member variable data
@@ -151,10 +155,10 @@ class Game
         $this->playerHand->roll();
 
         //Store a string rep of the roll in data
-        $this->data["playerRoll"] = $this->playerHand->lastRollString();
+        $this->data["playerRoll"] = implode(", ", $this->playerHand->getLastRoll());
 
         //Store a string rep of all rolls in data
-        $this->data["playerRollHistory"] = $this->playerHand->getHistoryString();
+        $this->data["playerRollHistory"] = implode(", ", $this->playerHand->getHistory());
 
         //Sum the roll
         $this->playerHand->sumLastRoll();
@@ -170,26 +174,14 @@ class Game
 
         //If using graphical dice store a representation of those in data
         if ($this->diceType === "graphical") {
-            $this->data["playerRollGraphicRep"] = $this->playerHand->getGraphRep();
-            $this->data["playerRollGraphicHistory"] = $this->playerHand->getGraphRepHistory();
+            $this->data["playerRollGraphicRep"] = $this->playerHand->getLastRollAsStrings();
+            $this->data["playerRollGraphicHistory"] = $this->playerHand->getHistoryStrings();
         }
 
         //Check if player has rolled 21
         if ($this->playerTotal === 21) {
-            //$this->gameState = "gameOver";
-
             //Store a message in data
             $this->data["twentyOne"] = "Congratulations you got 21!";
-
-            //$this->playerWins ++;
-            //$this->playerBitCoin += $this->bet;
-            //$this->computerBitCoin -= $this->bet;
-            //$this->data["computerWins"] = $this->computerWins;
-            //$this->data["playerWins"] = $this->playerWins;
-            //$this->data["playerBitCoin"] = $this->playerBitCoin;
-            //$this->data["computerBitCoin"] = $this->computerBitCoin;
-
-            //$this->broke();
         }
 
         //Check if player bust
@@ -225,16 +217,16 @@ class Game
             //Roll
             $this->computerHand->roll();
             //Store a string rep of the roll in data
-            $this->data["computerRoll"] = $this->computerHand->lastRollString();
+            //$this->data["computerRoll"] = $this->computerHand->getLastRoll();
 
             //Store a string rep of all rolls in data
-            $this->data["computerRollHistory"] = $this->computerHand->getHistoryString();
+            $this->data["computerRollHistory"] = implode(", ", $this->computerHand->getHistory());
 
             //Sum the roll
             $this->computerHand->sumLastRoll();
 
             //Store the sum in data
-            $this->data["sumComputerRoll"] = $this->computerHand->getSum();
+            //$this->data["sumComputerRoll"] = $this->computerHand->getSum();
 
             //Increase the total rolled with the sum of the roll
             $this->computerTotal += $this->computerHand->getSum();
@@ -244,8 +236,8 @@ class Game
 
             //If using graphical dice store a representation of those in data
             if ($this->diceType === "graphical") {
-                $this->data["computerRollGraphicRep"] = $this->computerHand->getGraphRep();
-                $this->data["computerRollGraphicHistory"] = $this->computerHand->getGraphRepHistory();
+                $this->data["computerRollGraphicRep"] = $this->computerHand->getLastRollAsStrings();
+                $this->data["computerRollGraphicHistory"] = $this->computerHand->getHistoryStrings();
             }
 
             //Set gameState to computerTurn
@@ -344,16 +336,4 @@ class Game
         $this->data["playerBitCoin"] = $this->initPlayerBitCoin;
         $this->data["broke"] = null;
     }
-
-    /**
-     * Plays (renders the game)
-     * @return void
-     */
-    /* public function playGame(): void
-    {
-        $this->data["gameState"] = $this->gameState;
-
-        $body = renderView("layout/dice.php", $this->data);
-        sendResponse($body);
-    } */
 }

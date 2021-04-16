@@ -25,8 +25,9 @@ class GraphicalDice extends Dice
      * which can be used as e.g. a CSS-classname
      * @return string
      */
-    public function graphicDice()
+    public function rollAsString(): string
     {
+
         return "dice-" . $this->roll;
     }
 }

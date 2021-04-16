@@ -14,7 +14,7 @@ namespace Jolf20\Dice;
 };
  */
 /**
- * Class Dice Hand
+ * Class Dice Hand2
  */
 class DiceHand
 {
@@ -24,49 +24,52 @@ class DiceHand
      */
     protected array $dices = [];
     protected ?int $sum = 0;
+    protected ?int $nrOfDice = 0;
     protected array $result = [];
     protected array $history = [];
+    protected array $resultAsStrings = [];
+    protected array $historyAsStrings = [];
 
-    /**
-     * Constructor
-     * @param int $size the size of the hand
-     */
-    public function __construct(int $size = 1, int $sides = 6)
+    public function addDice(DiceInterface $dice)
     {
-        for ($i = 0; $i < $size; $i++) {
-            $this->dices[$i] = new Dice($sides);
-        }
+        $this->nrOfDice++;
+        $this->dices[] = $dice;
     }
-
     /**
-     * Rolls the hand sums the values
-     */
-   /*  public function roll2(): void
-    {
-        $len = count($this->dices);
-
-        $this->sum = 0;
-
-        for($i = 0; $i < $len; $i++) {
-           $this->sum += $this->dices[$i]->roll();
-        }
-    }
- */
-    /**
-     * Rolls the hand
+     * Rolls the hand and adds the results to history
      * @return array $result An array with the rolled results
      */
     public function roll(): array
     {
-        $len = count($this->dices);
+        $len = $this->nrOfDice;
 
         for ($i = 0; $i < $len; $i++) {
             $this->dices[$i]->roll();
-            $this->result [$i] = $this->dices[$i]->getLastRoll();
-            $this->history [] = $this->dices[$i]->getLastRoll();
+            $this->result[$i] = $this->dices[$i]->getLastRoll();
+            $this->resultAsStrings[$i] = $this->dices[$i]->rollAsString();
+            $this->history[] = $this->dices[$i]->getLastRoll();
+            $this->historyAsStrings[] = $this->dices[$i]->rollAsString();
         }
 
         return $this->result;
+    }
+
+    /**
+     * Returns an array with last roll of the hand
+     * @return array $result The result of the last roll
+     */
+    public function getLastRoll(): array
+    {
+        return $this->result;
+    }
+
+    /**
+     * Returns an array with all rolls made by the hand
+     * @return array $history all rolls made by the hand
+     */
+    public function getHistory(): array
+    {
+        return $this->history;
     }
 
     /**
@@ -74,21 +77,12 @@ class DiceHand
      */
     public function sumLastRoll(): void
     {
-        $len = count($this->dices);
+        $len = $this->nrOfDice;
         $this->sum = 0;
 
         for ($i = 0; $i < $len; $i++) {
             $this->sum += $this->dices[$i]->getLastRoll();
         }
-    }
-
-     /**
-     * Returns an array with last roll of the hand
-     * @return array $result The result of the last roll
-     */
-    public function getLastRoll(): array
-    {
-        return $this->result;
     }
 
      /**
@@ -102,27 +96,32 @@ class DiceHand
 
     /**
      * Returns the  result of the last rolled hand
-     * as a comma separated string
-     * @return string A comma separated string with last
-     * roll of the hand
+     *
+     * @return array An array with last roll of the hand
+     * as strings
      */
-    public function lastRollString(): string
+    public function getLastRollAsStrings(): array
     {
-        $string = implode(",", $this->result);
-
-        return $string;
+        return $this->resultAsStrings;
     }
 
     /**
      * Returns the  result of all rolled hands
      * as a comma separated string
-     * @return string A comma separated string with last
-     * roll of the hand
+     * @return array An array with all rolls of the hand
+     * as strings
      */
-    public function getHistoryString(): string
+    public function getHistoryStrings(): array
     {
-        $string = implode(", ", $this->history);
+        return $this->historyAsStrings;
+    }
 
-        return $string;
+    /**
+     * Get nr of dice
+     * @return int the number of dice in this hand
+     */
+    public function getNrOfDice(): int
+    {
+        return $this->nrOfDice;
     }
 }

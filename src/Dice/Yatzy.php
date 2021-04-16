@@ -4,14 +4,12 @@ declare(strict_types=1);
 
 namespace Jolf20\Dice;
 
-use Jolf20\Dice\Dice2;
+use Jolf20\Dice\Dice;
 use Jolf20\Dice\YatzyHand;
 use Jolf20\Dice\Scoreboard;
 
 use function Mos\Functions\{
-    redirectTo,
     renderView,
-    sendResponse,
     url
 };
 

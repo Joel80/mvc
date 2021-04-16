@@ -16,7 +16,7 @@ namespace Jolf20\Dice;
 /**
  * Class Dice
  */
-class Dice
+class Dice implements DiceInterface
 {
     /**
      * @var ?int $roll Stores the last roll of the die
@@ -56,5 +56,14 @@ class Dice
     {
 
         return $this->roll;
+    }
+
+    /**
+     * Returns the roll as a string
+     * @return string string representation of the last roll
+     */
+    public function rollAsString(): string
+    {
+        return strval($this->roll);
     }
 }

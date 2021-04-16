@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 require __DIR__ . "/../../vendor/autoload.php";
 
-use Jolf20\Dice\Dice2;
-use Jolf20\Dice\GraphicalDice2;
-use Jolf20\Dice\DiceHand2;
+use Jolf20\Dice\Dice;
+use Jolf20\Dice\GraphicalDice;
+use Jolf20\Dice\DiceHand;
 use Jolf20\Dice\YatzyHand;
 use Jolf20\Dice\GraphicalDiceHand;
 use Jolf20\Dice\Scorebox;
@@ -17,13 +17,13 @@ use Jolf20\Dice\Scoreboard;
 $stringResult = [];
 $hand = new YatzyHand();
 
-$hand->addDice(new GraphicalDice2());
-$hand->addDice(new GraphicalDice2());
-$hand->addDice(new GraphicalDice2());
-$hand->addDice(new GraphicalDice2());
-$hand->addDice(new GraphicalDice2());
+$hand->addDice(new GraphicalDice());
+$hand->addDice(new GraphicalDice()));
+$hand->addDice(new GraphicalDice());
+$hand->addDice(new GraphicalDice());
+$hand->addDice(new GraphicalDice());
 
-//$hand->addDice(new Dice2);
+//$hand->addDice(new Dice);
 
 $scoreboard = new Scoreboard();
 
@@ -147,7 +147,7 @@ foreach ($stringResult as $string) {
 };
 
  */
-/* $die2 = new GraphicalDice2();
+/* $die2 = new GraphicalDice();
 
 $roll = $die2->roll();
 
