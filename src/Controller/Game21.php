@@ -8,6 +8,7 @@ use Nyholm\Psr7\Factory\Psr17Factory;
 use Nyholm\Psr7\Response;
 use Psr\Http\Message\ResponseInterface;
 use Jolf20\Dice\Game;
+use Jolf20\Dice\DiceHand;
 use Mos\Controller\ControllerTrait;
 
 use function Mos\Functions\{
@@ -40,15 +41,19 @@ class Game21
     {
         $game = isset($_SESSION["game"]) ? $_SESSION["game"] : null;
 
-        $nrOfDice = intval($_POST["dice"]);
+        $playerHand = new DiceHand();
 
-        $typeOfDice = ($_POST["diceType"]);
+        $computerHand = new DiceHand();
+
+        $nrOfDice = isset($_POST["dice"]) ? intval($_POST["dice"]) : 0;
+
+        $typeOfDice = isset($_POST["diceType"]) ? $_POST["diceType"] : "text" ;
 
         $bet = isset($_POST["bet"]) ? intval($_POST["bet"]) : 0;
 
         $sides = isset($_POST["sides"]) ? intval($_POST["sides"]) : null;
 
-        $game->setup($nrOfDice, $typeOfDice, $bet, $sides);
+        $game->setup($playerHand, $computerHand, $nrOfDice, $typeOfDice, $bet, $sides);
 
         return $this->redirect((url("/dice")));
     }

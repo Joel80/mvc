@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Mos\Functions;
 
-use Twig\Loader\FilesystemLoader as TwigFilesystemLoader;
-use Twig\Environment as TwigEnvironment;
+use Twig\Loader\FilesystemLoader as FileSystemLoader;
+use Twig\Environment as Environment;
 
 /**
  * Functions.
@@ -19,10 +19,10 @@ use Twig\Environment as TwigEnvironment;
  */
 function getRoutePath(): string
 {
-    $offset = strlen(dirname($_SERVER["SCRIPT_NAME"]));
-    $path   = substr($_SERVER["REQUEST_URI"], $offset);
+    $offset = strlen(dirname($_SERVER["SCRIPT_NAME"] ?? null));
+    $path   = substr($_SERVER["REQUEST_URI"] ?? "", $offset);
 
-    return $path;
+    return $path ? $path : "";
 }
 
 
@@ -67,13 +67,13 @@ function renderTwigView(
     static $twig = null;
 
     if (is_null($twig)) {
-        $loader = new TwigFilesystemLoader(
+        $loader = new FilesystemLoader(
             INSTALL_PATH . "/view/twig"
         );
         // $twig = new \Twig\Environment($loader, [
         //     "cache" => INSTALL_PATH . "/cache/twig",
         // ]);
-        $twig = new TwigEnvironment($loader);
+        $twig = new Environment($loader);
     }
 
     return $twig->render($template, $data);
@@ -88,26 +88,24 @@ function renderTwigView(
  *
  * @return void
  */
-function sendResponse(string $body, int $status = 200): void
+/* function sendResponse(string $body, int $status = 200): void
 {
     http_response_code($status);
     echo $body;
-}
-
-
+} */
 
 /**
- * Redirect to an url.
+  * Redirect to an url.
  *
  * @param string $url where to redirect.
- *
+  *
  * @return void
- */
-function redirectTo(string $url): void
-{
+  */
+/* function redirectTo(string $url): void
+ {
     http_response_code(200);
     header("Location: $url");
-}
+ }  */
 
 
 
@@ -139,14 +137,16 @@ function getBaseUrl()
         return $baseUrl;
     }
 
-    $scriptName = rawurldecode($_SERVER["SCRIPT_NAME"]);
+    $scriptName = rawurldecode($_SERVER["SCRIPT_NAME"] ?? null);
     $path = rtrim(dirname($scriptName), "/");
 
     // Prepare to create baseUrl by using currentUrl
     $parts = parse_url(getCurrentUrl());
 
     // Build the base url from its parts
-    $siteUrl = "{$parts["scheme"]}://{$parts["host"]}"
+    $siteUrl = ($parts["scheme"] ?? null)
+        . "://"
+        . ($parts["host"] ?? null)
         . (isset($parts["port"])
             ? ":{$parts["port"]}"
             : "");
@@ -164,17 +164,17 @@ function getBaseUrl()
  */
 function getCurrentUrl(): string
 {
-    $scheme = $_SERVER["REQUEST_SCHEME"];
-    $server = $_SERVER["SERVER_NAME"];
+    $scheme = $_SERVER["REQUEST_SCHEME"] ?? "";
+    $server = $_SERVER["SERVER_NAME"] ?? "";
 
-    $port  = $_SERVER["SERVER_PORT"];
+    $port  = $_SERVER["SERVER_PORT"] ?? "";
     $port  = ($port === "80")
         ? ""
-        : (($port === 443 && $_SERVER["HTTPS"] === "on")
+        : (($port === 443 && ($_SERVER["HTTPS"] ?? null) === "on")
             ? ""
             : ":" . $port);
 
-    $uri = rtrim(rawurldecode($_SERVER["REQUEST_URI"]), "/");
+    $uri = rtrim(rawurldecode($_SERVER["REQUEST_URI"] ?? ""), "/");
 
     $url  = htmlspecialchars($scheme) . "://";
     $url .= htmlspecialchars($server)

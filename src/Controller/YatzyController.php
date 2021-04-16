@@ -11,7 +11,7 @@ use Jolf20\Dice\Yatzy as Yatzy;
 use Jolf20\Dice\YatzyHand as YatzyHand;
 use Jolf20\Dice\Scoreboard as Scoreboard;
 use Jolf20\Dice\Scorebox as Scorebox;
-use Jolf20\Dice\GraphicalDice2 as GraphicalDice2;
+use Jolf20\Dice\GraphicalDice as GraphicalDice;
 use Mos\Controller\ControllerTrait;
 
 use function Mos\Functions\{
@@ -32,7 +32,7 @@ class YatzyController
         if (!isset($_SESSION["yatzy"])) {
             $playerHand = new YatzyHand();
             for ($i = 0; $i < 5; $i++) {
-                $playerHand->addDice(new GraphicalDice2());
+                $playerHand->addDice(new GraphicalDice());
             }
 
             $scoreboard = new Scoreboard();
