@@ -25,8 +25,6 @@ require INSTALL_PATH . "/vendor/autoload.php";
 // Load the inital configuration
 require INSTALL_PATH . "/config/bootstrap.php";
 
-
-
 /**
  * Router
  *
