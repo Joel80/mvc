@@ -1,4 +1,7 @@
 {
+    "name": "jolf20/mvc-game",
+    "description": "A part of the course dbwebb/mvc, the game. My solutions",
+    "license": "MIT",
     "autoload": {
         "psr-4": {
             "Mos\\": "src/",
