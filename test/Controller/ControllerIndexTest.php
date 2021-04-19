@@ -13,9 +13,9 @@ use Psr\Http\Message\ResponseInterface;
 class ControllerIndexTest extends TestCase
 {
     /**
-     * Try to create the controller class.
+     * Try to create the controller object.
      */
-    public function testCreateTheControllerClass()
+    public function testCreateTheControllerObject()
     {
         $controller = new Index();
         $this->assertInstanceOf("\Mos\Controller\Index", $controller);
