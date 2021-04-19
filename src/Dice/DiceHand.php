@@ -4,17 +4,8 @@ declare(strict_types=1);
 
 namespace Jolf20\Dice;
 
-/* use function Mos\Functions\{
-    destroySession,
-    redirectTo,
-    renderView,
-    renderTwigView,
-    sendResponse,
-    url
-};
- */
 /**
- * Class Dice Hand2
+ * Class DiceHand
  */
 class DiceHand
 {
@@ -53,6 +44,16 @@ class DiceHand
 
         return $this->result;
     }
+
+    /**
+     * Returns an array with the DiceInterface objects
+     * @return array $dices
+     */
+    public function getDices(): array
+    {
+        return $this->dices;
+    }
+
 
     /**
      * Returns an array with last roll of the hand

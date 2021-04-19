@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-require __DIR__ . "/../../vendor/autoload.php";
+//require __DIR__ . "/../../vendor/autoload.php";
 
 use Jolf20\Dice\Dice;
 use Jolf20\Dice\GraphicalDice;
@@ -11,7 +11,6 @@ use Jolf20\Dice\YatzyHand;
 use Jolf20\Dice\GraphicalDiceHand;
 use Jolf20\Dice\Scorebox;
 use Jolf20\Dice\Scoreboard;
-
 
 /* $result = [];
 $stringResult = [];

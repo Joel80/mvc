@@ -56,6 +56,7 @@ class Yatzy
         //Initialize the player hand array with locked dice all
         //get the lock status false
         $this->playerHand->initLockedDice();
+
         //Set the size of the hand
         $this->handSize = $this->playerHand->getNrOfDice();
 
@@ -67,7 +68,7 @@ class Yatzy
         }
 
         //Init the lockedDice array - all dice are unlocked
-        $this->lockedDice = $this->playerHand->isLockedDice();
+        $this->lockedDice = $this->playerHand->getLockedDice();
 
         //Init data with the header
         $this->data = [
@@ -159,7 +160,7 @@ class Yatzy
         $this->playerHand->initLockedDice();
 
         //(Re)set the lockedDice array
-        $this->lockedDice = $this->playerHand->isLockedDice();
+        $this->lockedDice = $this->playerHand->getLockedDice();
 
         //For each position to lock
         foreach ($positions as $position) {
@@ -173,7 +174,7 @@ class Yatzy
         //Store the lockedDice array in data for rendering
         $this->data["lockedDice"] = $this->lockedDice;
 
-        //Check if turn is over
+        //Check if turn is over (all dice locked)
         if ($this->turnOver()) {
             //Set game state to scoring
             $this->gameState = "scoring";
@@ -202,7 +203,7 @@ class Yatzy
         $this->playerHand->initLockedDice();
 
         //Update the lockedDice array
-        $this->lockedDice = $this->playerHand->isLockedDice();
+        $this->lockedDice = $this->playerHand->getLockedDice();
 
         //Store the array lockedDice in data for rendering
         $this->data["lockedDice"] = $this->lockedDice;
@@ -210,9 +211,9 @@ class Yatzy
 
     /**
      * Checks if turn is over
-     * @return bool true if turn i over else false
+     * @return bool true if turn is over else false
      */
-    public function turnOver(): bool
+    private function turnOver(): bool
     {
         //Check if all dice are locked
         $allDiceLocked = $this->allDiceLocked();
@@ -236,7 +237,7 @@ class Yatzy
     private function allDiceLocked(): bool
     {
         //Get the array with status of the dice
-        $lockedDice = $this->playerHand->isLockedDice();
+        $lockedDice = $this->playerHand->getLockedDice();
 
         //For each die
         foreach ($lockedDice as $locked) {
@@ -254,7 +255,7 @@ class Yatzy
      * Prepares the scoring
      * @return void
      */
-    public function scoring(): void
+    private function scoring(): void
     {
         //Array to hold the scores for each result
         $scores = [];
@@ -349,12 +350,15 @@ class Yatzy
     }
     /**
      * Locks a score
-     * @param int $position of the scorebox in the scoreboard
+     * @param int|null $position of the scorebox in the scoreboard
      * @return void
      */
-    public function lockScore(int $position): void
+    public function lockScore(?int $position): void
     {
         //Get the scorebox from the scoreboard
+        if ($position === null) {
+            return;
+        }
         $scorebox = $this->scoreboard->getScorebox($position);
 
         //Lock the scorebox
@@ -400,7 +404,7 @@ class Yatzy
 
         //Unlock all dice
         $this->playerHand->initLockedDice();
-        $this->lockedDice = $this->playerHand->isLockedDice();
+        $this->lockedDice = $this->playerHand->getLockedDice();
 
         //Store rounds in data for rendering
         $this->data["rounds"] = $this->rounds;

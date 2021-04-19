@@ -15,6 +15,14 @@ class YatzyHand extends DiceHand
      */
     private array $lockedDice = [];
 
+    public function addDice(DiceInterface $dice)
+    {
+        $this->nrOfDice++;
+        $this->dices[] = $dice;
+
+        $this->initLockedDice();
+    }
+
     /**
      * Sets the lock status of all dice to false
      * @return void
@@ -29,6 +37,15 @@ class YatzyHand extends DiceHand
     }
 
     /**
+     * Gets an array with the lock status of all dice
+     * @return array
+     */
+    public function getLockedDice(): array
+    {
+        return $this->lockedDice;
+    }
+
+    /**
      * Locks a die in a certain position
      * @param int $position of the die to lock
      * @return void
@@ -36,15 +53,6 @@ class YatzyHand extends DiceHand
     public function lockDice(int $position): void
     {
         $this->lockedDice[$position] = true;
-    }
-
-    /**
-     * Gets the positions of the locked dice
-     * @return array with positions of the locked dice
-     */
-    public function isLockedDice(): array
-    {
-        return $this->lockedDice;
     }
 
     /**
@@ -69,11 +77,11 @@ class YatzyHand extends DiceHand
     }
 
     /**
-     * Sums all dice with a certain value in hand
+     * Gets all dice with a certain value in hand
      * @param int $value the value to look for
-     * @return array the sum of all dice with
-     * a certain value in hand
-     */
+     * @return array $dice
+     *
+     * */
     public function getDiceWithValue(int $value): array
     {
         $len = $this->nrOfDice;

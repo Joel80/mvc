@@ -141,6 +141,7 @@ class Game
         $this->data["computerRollHistory"] = null;
         $this->data["computerRollGraphicHistory"] = null;
         $this->data["twentyOne"] = null;
+        $this->data["result"] = null;
 
         //Set gameState to playerTurn
         $this->gameState = "playerTurn";
@@ -179,13 +180,30 @@ class Game
         }
 
         //Check if player has rolled 21
-        if ($this->playerTotal === 21) {
+        $this->check21($this->playerTotal);
+
+        //Check if player bust
+        $this->checkBust($this->playerTotal);
+    }
+
+    /**
+     * Check 21
+     */
+    public function check21(int $score)
+    {
+        if ($score === 21) {
             //Store a message in data
             $this->data["twentyOne"] = "Congratulations you got 21!";
         }
+        return;
+    }
 
-        //Check if player bust
-        if ($this->playerTotal > 21) {
+    /**
+     * Check bust
+     */
+    public function checkBust(int $score)
+    {
+        if ($score > 21) {
             //Set gameState to gameOver
             $this->gameState = "gameOver";
             //Store the result in data
@@ -202,8 +220,10 @@ class Game
             $this->data["playerBitCoin"] = $this->playerBitCoin;
             $this->data["computerBitCoin"] = $this->computerBitCoin;
 
-            $this->broke();
+            //Check if someone broke
+            $this->broke($this->computerBitCoin, $this->playerBitCoin);
         }
+        return;
     }
 
     /**
@@ -245,7 +265,9 @@ class Game
         }
 
         //Check if computer or player won and store result in data
-        if ($this->computerTotal <= 21 && $this->computerTotal >= $this->playerTotal) {
+        $this->checkWin($this->computerTotal, $this->playerTotal);
+
+        /* if ($this->computerTotal <= 21 && $this->computerTotal >= $this->playerTotal) {
             $this->data["result"] = "Computer won!";
             $this->computerWins ++;
             $this->playerBitCoin -= $this->bet;
@@ -255,7 +277,7 @@ class Game
             $this->playerWins ++;
             $this->playerBitCoin += $this->bet;
             $this->computerBitCoin -= $this->bet;
-        }
+        } */
 
         $this->data["computerWins"] = $this->computerWins;
         $this->data["playerWins"] = $this->playerWins;
@@ -263,10 +285,34 @@ class Game
         $this->data["computerBitCoin"] = $this->computerBitCoin;
 
         //Check if someone broke
-        $this->broke();
+        $this->broke($this->computerBitCoin, $this->playerBitCoin);
 
         //Set gameState to gameOver
         $this->gameState = "gameOver";
+    }
+
+    /**
+     * Check who won
+     * @param int $computerTotal - computer score
+     * @param int $playerTotal - player score
+     * @return void
+     */
+    public function checkWin(int $computerTotal, int $playerTotal): void
+    {
+        //Check if computer or player won and store result in data
+        if ($computerTotal <= 21 && $computerTotal >= $playerTotal) {
+            $this->data["result"] = "Computer won!";
+            $this->computerWins ++;
+            $this->playerBitCoin -= $this->bet;
+            $this->computerBitCoin += $this->bet;
+        } else if ($computerTotal > 21 || $computerTotal < $playerTotal) {
+            $this->data["result"] = "Player won!";
+            $this->playerWins ++;
+            $this->playerBitCoin += $this->bet;
+            $this->computerBitCoin -= $this->bet;
+        }
+
+        return;
     }
 
     /**
@@ -296,16 +342,19 @@ class Game
 
     /**
      * Checks if someone broke
+     * @param int $computerBitCoin
+     * @param int $playerBitCoin
+     * @return void
      */
-    public function broke(): void
+    public function broke(int $computerBitCoin, int $playerBitCoin): void
     {
         //Set broke to null
         $this->data["broke"] = null;
 
         //Check if someones bitcoin is below 0 and set data
-        if ($this->computerBitCoin <= 0) {
+        if ($computerBitCoin <= 0) {
             $this->data["broke"] = "Computer broke - please reset bitcoins";
-        } elseif ($this->playerBitCoin <= 0) {
+        } elseif ($playerBitCoin <= 0) {
             $this->data["broke"] = "Player broke - please reset bitcoins";
         }
     }

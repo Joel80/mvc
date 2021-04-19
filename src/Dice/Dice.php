@@ -4,15 +4,6 @@ declare(strict_types=1);
 
 namespace Jolf20\Dice;
 
-/* use function Mos\Functions\{
-    destroySession,
-    redirectTo,
-    renderView,
-    renderTwigView,
-    sendResponse,
-    url
-};
- */
 /**
  * Class Dice
  */
@@ -36,6 +27,15 @@ class Dice implements DiceInterface
     }
 
     /**
+     * Get sides
+     * @return int $sides of the die
+     */
+    public function getSides(): int
+    {
+        return $this->sides;
+    }
+
+    /**
      * Rolls the die
      *
      * @return int $this->roll (the value of $roll)
@@ -49,10 +49,10 @@ class Dice implements DiceInterface
     }
 
     /**
-     * Returns the value of $roll (last roll)
-     * @return int $this->roll (the value of roll)
+     * Gets the value of $this->roll (last roll)
+     * @return int|null $this->roll
      */
-    public function getLastRoll(): int
+    public function getLastRoll(): ?int
     {
 
         return $this->roll;
