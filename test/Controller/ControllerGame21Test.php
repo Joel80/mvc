@@ -17,7 +17,7 @@ class ControllerGame21Test extends TestCase
     /**
      * Try to create the controller class.
      */
-    public function testCreateTheControllerGame21Class()
+    public function testCreateTheGame21Class()
     {
         $controller = new Game21();
         $this->assertInstanceOf("\Jolf20\Controller\Game21", $controller);
@@ -44,7 +44,6 @@ class ControllerGame21Test extends TestCase
 
         $exp = "\Psr\Http\Message\ResponseInterface";
         $res = $controller->setup();
-
         $this->assertInstanceOf($exp, $res);
     }
 
@@ -55,16 +54,13 @@ class ControllerGame21Test extends TestCase
     public function testControllerMethodPlayerRollReturnsResponse()
     {
         $controller = new Game21();
+
         $game = new Game();
 
-        $game->setup(new DiceHand, new DiceHand, 2, "text", 10, 6);
+        $game->setup(new DiceHand(), new DiceHand(), 2, "text", 10, 6);
 
         $exp = "\Psr\Http\Message\ResponseInterface";
         $res = $controller->playerRoll();
-
-        //Should this kind of test be here or in test for Game class?
-        $data = $game->getData();
-        $this->assertNotNull($data["playerRoll"]);
 
         $this->assertInstanceOf($exp, $res);
     }
@@ -78,7 +74,7 @@ class ControllerGame21Test extends TestCase
         $controller = new Game21();
         $game = new Game();
 
-        $game->setup(new DiceHand, new DiceHand, 2, "text", 10, 6);
+        $game->setup(new DiceHand(), new DiceHand(), 2, "text", 10, 6);
 
         $exp = "\Psr\Http\Message\ResponseInterface";
         $res = $controller->computerRoll();
@@ -95,7 +91,7 @@ class ControllerGame21Test extends TestCase
         $controller = new Game21();
         $game = new Game();
 
-        $game->setup(new DiceHand, new DiceHand, 2, "text", 10, 6);
+        $game->setup(new DiceHand(), new DiceHand(), 2, "text", 10, 6);
 
         $exp = "\Psr\Http\Message\ResponseInterface";
         $res = $controller->playAgain();
@@ -112,7 +108,7 @@ class ControllerGame21Test extends TestCase
         $controller = new Game21();
         $game = new Game();
 
-        $game->setup(new DiceHand, new DiceHand, 2, "text", 10, 6);
+        $game->setup(new DiceHand(), new DiceHand(), 2, "text", 10, 6);
 
         $exp = "\Psr\Http\Message\ResponseInterface";
         $res = $controller->resetScore();
@@ -129,7 +125,7 @@ class ControllerGame21Test extends TestCase
         $controller = new Game21();
         $game = new Game();
 
-        $game->setup(new DiceHand, new DiceHand, 2, "text", 10, 6);
+        $game->setup(new DiceHand(), new DiceHand(), 2, "text", 10, 6);
 
         $exp = "\Psr\Http\Message\ResponseInterface";
         $res = $controller->resetBitCoins();
