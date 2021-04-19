@@ -10,7 +10,7 @@ use Psr\Http\Message\ResponseInterface;
 use function Mos\Functions\renderView;
 
 /**
- * Base controller with utilities for controllers.
+ * Base controller trait with utilities for controllers.
  */
 trait ControllerTrait
 {

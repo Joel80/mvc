@@ -10,7 +10,7 @@ use Psr\Http\Message\ResponseInterface;
 use function Mos\Functions\renderView;
 
 /**
- * Controller for error routes.
+ * Controller for error route.
  */
 class Error
 {

@@ -61,7 +61,6 @@ class YatzyController
     public function playerRoll(): ResponseInterface
     {
         $game = isset($_SESSION["yatzy"]) ? $_SESSION["yatzy"] : null;
-
         $game->playerRoll();
 
         return $this->redirect((url("/yatzy")));
@@ -87,7 +86,7 @@ class YatzyController
 
     public function lockScore(): ResponseInterface
     {
-        $lockedScore = intval($_POST["lockScore"]);
+        $lockedScore = isset($_POST["lockScore"]) ? intval($_POST["lockScore"]) : null;
 
         $game = isset($_SESSION["yatzy"]) ? $_SESSION["yatzy"] : null;
 
